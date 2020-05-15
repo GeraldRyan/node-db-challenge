@@ -3,7 +3,8 @@ const db = require('../data/dbconfig');
 module.exports = {
   getAllProjects,
   addProject,
-  getTasksByProjId
+  getTasksByProjId,
+  getResourcesByProjId
   }
 
 
@@ -19,3 +20,6 @@ module.exports = {
     return db('tasks as t').leftJoin('projects as p', 't.proj_id', 'p.id').where('p.id', '=',id)
   }
 
+  function getResourcesByProjId(id) {
+    return db('project_resources as pr').leftJoin('resources as r', 'pr.resource_id', 'r.id').where('pr.proj_id', '=',id)
+  }
