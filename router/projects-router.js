@@ -30,7 +30,30 @@ res.status(200).json(req.body)
 router.get('/:id/', (req, res) => {
   Proj.getAllProjectData(req.params.id)
       .then(tasks => {
-          res.status(200).json(tasks);
+        let returnee = {}
+        returnee = {
+          id: tasks[0].id,
+          name: tasks[0].proj_name,
+          description: tasks[0].proj_desc,
+          completed: tasks[0].completed,
+          tasks: 
+            tasks.map(item =>{
+              return ({
+                id:item.id,
+                description:item.task_name,
+                notes:item.task_notes,
+              })
+            })
+          ,
+          resources:tasks.map(item=>{
+            return({
+              name:item.resource_name,
+              description:item.resource_desc
+            })
+
+          })
+        }
+          res.status(200).json(returnee);
       })
       .catch(err => {
           res.status(500).json({
