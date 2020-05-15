@@ -28,5 +28,16 @@ res.status(200).json(req.body)
   })
 })
 
+router.get('/:id/tasks', (req, res) => {
+  Tasks.getTasksByProjId(req.params.id)
+      .then(tasks => {
+          res.status(200).json(tasks);
+      })
+      .catch(err => {
+          res.status(500).json({
+              errMessage: 'Internal Server Error, could not receive projects'
+          })
+      })
+})
 
 module.exports = router;
