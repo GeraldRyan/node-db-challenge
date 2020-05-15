@@ -1,15 +1,15 @@
 const express = require('express');
 const db = require('../data/dbconfig');
 
-const Proj = require('./projects-model.js');
+const Tasks = require('./tasks-model.js');
 
 const router = express.Router();
 
 // GET ALL STORES
 router.get('/', (req, res) => {
-    Proj.getAllProjects()
-        .then(projects => {
-            res.status(200).json(projects);
+    Tasks.getAllTasks()
+        .then(tasks => {
+            res.status(200).json(tasks);
         })
         .catch(err => {
             res.status(500).json({
@@ -19,12 +19,12 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req,res) =>{
-  Proj.addProject(req.body)
+  Tasks.addTask(req.body)
   .then(ids =>{
 res.status(200).json(req.body)
   })
   .catch(error =>{
-    res.status(500).json("internal error")
+    res.status(500).json(`internal error: ${error}`)
   })
 })
 
