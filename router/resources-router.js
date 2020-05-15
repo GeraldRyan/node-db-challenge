@@ -17,6 +17,17 @@ router.get('/', (req, res) => {
         })
 })
 
+
+router.post('/', (req,res)=>{
+  Reso.addResource(req.body)
+  .then((addee =>{
+    res.status(200).json(addee)
+  }))
+  .catch(err =>{
+    res.status(500).json(`Internal Server Erorr ${err}`)
+  })
+})
+
 // // GET STORE BY ID 
 // router.get('/:id', (req, res) => {
 //     const { id } = req.params;
