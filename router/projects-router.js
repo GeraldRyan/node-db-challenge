@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('../data/dbconfig');
 
 const Proj = require('./projects-model.js');
 
@@ -16,6 +17,17 @@ router.get('/', (req, res) => {
             })
         })
 })
+
+router.post('/', (req,res) =>{
+  Proj.addProject(req.body)
+  .then(ids =>{
+res.status(200).json(req.body)
+  })
+  .catch(error =>{
+    res.status(500).json("internal error")
+  })
+})
+
 
 // // GET STORE BY ID 
 // router.get('/:id', (req, res) => {
