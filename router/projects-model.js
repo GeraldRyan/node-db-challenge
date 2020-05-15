@@ -4,7 +4,8 @@ module.exports = {
   getAllProjects,
   addProject,
   getTasksByProjId,
-  getResourcesByProjId
+  getResourcesByProjId,
+  getAllProjectData
   }
 
 
@@ -22,4 +23,7 @@ module.exports = {
 
   function getResourcesByProjId(id) {
     return db('project_resources as pr').leftJoin('resources as r', 'pr.resource_id', 'r.id').where('pr.proj_id', '=',id)
+  }
+  function getAllProjectData(id) {
+    return db('projects as p').join('project_resources as pr', 'pr.proj_id', 'p.id').join('resources as r', 'pr.resource_id','r.id').join("tasks as t", 't.proj_id', 'p.id').where('p.id','=',id)
   }

@@ -27,16 +27,26 @@ res.status(200).json(req.body)
     res.status(500).json("internal error")
   })
 })
-
+router.get('/:id/', (req, res) => {
+  Proj.getAllProjectData(req.params.id)
+      .then(tasks => {
+          res.status(200).json(tasks);
+      })
+      .catch(err => {
+          res.status(500).json({
+              errMessage: `Internal Server Error, could not receive projects ${err}`
+          })
+      })
+})
 router.get('/:id/tasks', (req, res) => {
   Proj.getTasksByProjId(req.params.id)
       .then(tasks => {
           res.status(200).json(tasks);
       })
       .catch(err => {
-          res.status(500).json({
-              errMessage: 'Internal Server Error, could not receive projects'
-          })
+          res.status(500).json(
+            `Internal Server Error, could not receive projects, ${err}`
+          )
       })
 })
 
@@ -46,9 +56,7 @@ router.get('/:id/resources', (req, res) => {
           res.status(200).json(resources);
       })
       .catch(err => {
-          res.status(500).json({
-              errMessage: 'Internal Server Error, could not receive projects'
-          })
+          res.status(500).json(`Internal Server Error, could not receive projects, ${err}`)
       })
 })
 
